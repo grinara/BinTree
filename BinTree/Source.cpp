@@ -52,8 +52,8 @@ private:
 		return left || right;
 	}
 public:
-	BinTree() { root = new Node(); }
-	BinTree(int key) { root = new Node(key); }
+	BinTree() { root = new Node(); size = 0; }
+	BinTree(int key) { root = new Node(key); size = 0;}
 	BinTree(int key,int size) {
 		root = new Node(key);
 		for (int i = 0; i < size; i++) {
