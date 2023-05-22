@@ -240,9 +240,9 @@ int main() {
 	t->insert(106);
 	t->insert(1005);
 	//t->erase(37);
-	//t->PrintTree(t->GetRoot(), 0, 40, 0);
+	t->PrintTree(t->GetRoot(), 0, 40, 0);
 	//cout << endl;
-	t->inorder(t->GetRoot());
+	//t->inorder(t->GetRoot());
 	//t->PrintTree(t->GetRoot(), 0, 40, 0);
 	//cout << endl;
 	//cout << t->find_max()->Data;
