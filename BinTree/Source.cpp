@@ -36,6 +36,21 @@ private:
 			delete nod;
 		}
 	}
+	bool printLevel(Node* nod, int level)
+	{
+		if (nod == NULL) {
+			return false;
+		}
+		if (level == 1)
+		{
+			cout << nod->Data << " ";// вернуть true, если хотя бы один узел присутствует на заданном уровне
+			return true;
+		}
+		bool left = printLevel(nod->left, level - 1);
+		bool right = printLevel(nod->right, level - 1);
+
+		return left || right;
+	}
 public:
 	BinTree() { root = new Node(); }
 	BinTree(int key) { root = new Node(key); }
@@ -200,22 +215,7 @@ public:
 			inorderKPL(nod->left);
 		}
 	}
-	bool printLevel(Node* nod, int level)
-	{
-		if (nod == NULL) {
-			return false;
-		}
-		if (level == 1)
-		{
-			cout << nod->Data << " ";// вернуть true, если хотя бы один узел присутствует на заданном уровне
-			return true;
-		}
-		bool left = printLevel(nod->left, level - 1);
-		bool right = printLevel(nod->right, level - 1);
-
-		return left || right;
-	}
-	void levelOrderTraversal(Node* nod)
+	void inorder(Node* nod)
 	{
 		// начинаем с уровня 1 — до высоты дерева
 		int level = 1;
@@ -242,7 +242,7 @@ int main() {
 	//t->erase(37);
 	//t->PrintTree(t->GetRoot(), 0, 40, 0);
 	//cout << endl;
-	t->levelOrderTraversal(t->GetRoot());
+	t->inorder(t->GetRoot());
 	//t->PrintTree(t->GetRoot(), 0, 40, 0);
 	//cout << endl;
 	//cout << t->find_max()->Data;
