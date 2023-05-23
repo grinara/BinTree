@@ -36,8 +36,7 @@ public:
 	BinTree(int key,int size) {
 		root = new Node(key);
 		for (int i = 0; i < size; i++) {
-			int k = rand() % 13;
-			insert(k);
+			insert(rand() % 13);
 		}
 	}
 	BinTree(BinTree& c) {
