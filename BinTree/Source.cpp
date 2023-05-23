@@ -82,10 +82,10 @@ public:
 	Node* find(int key) {
 		if (root == NULL)return root;
 		Node* nod = root;
-		Node* parent = NULL;
+		//Node* parent = NULL;
 		while (nod && nod->Data != key) {
-			if (nod->Data > key) { parent = nod; nod = nod->left; } //Движение по левой или правой ветви родительского узла
-			else { parent = nod; nod = nod->right; }
+			if (nod->Data > key) { nod = nod->left; } //Движение по левой или правой ветви родительского узла
+			else { nod = nod->right; }
 		}
 		return nod;
 	}
