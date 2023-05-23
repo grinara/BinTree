@@ -215,6 +215,16 @@ public:
 			inorderKPL(nod->left);
 		}
 	}
+	void inorderLPK(Node* nod) {
+		if (nod != NULL) {
+			// ќбходим лево
+			inorderLPK(nod->left);
+			// ќбходим право
+			inorderLPK(nod->right);
+			// ќбходим корень
+			cout << nod->Data << " -> ";
+		}
+	}
 	void inorder(Node* nod)
 	{
 		// начинаем с уровн€ 1 Ч до высоты дерева
@@ -240,7 +250,8 @@ int main() {
 	t->insert(106);
 	t->insert(1005);
 	//t->erase(37);
-	t->PrintTree(t->GetRoot(), 0, 40, 0);
+	//t->PrintTree(t->GetRoot(), 0, 40, 0);
+	t->inorderLPK(t->GetRoot());
 	//cout << endl;
 	//t->inorder(t->GetRoot());
 	//t->PrintTree(t->GetRoot(), 0, 40, 0);
