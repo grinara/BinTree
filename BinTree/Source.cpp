@@ -251,7 +251,7 @@ int main() {
 	t->insert(1005);
 	//t->erase(37);
 	//t->PrintTree(t->GetRoot(), 0, 40, 0);
-	t->inorderLPK(t->GetRoot());
+	t->inorderKLP(t->GetRoot());
 	//cout << endl;
 	//t->inorder(t->GetRoot());
 	//t->PrintTree(t->GetRoot(), 0, 40, 0);
