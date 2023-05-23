@@ -232,6 +232,16 @@ public:
 		}
 		return *this;
 	}
+	void print_Tree(Node* p, int level=0)
+	{
+		if (p)
+		{
+			print_Tree(p->left, level + 3);
+			for (int i = 0; i < level; i++) cout << "   ";
+			cout << p->Data << endl;
+			print_Tree(p->right, level + 3);
+		}
+	}
 };
 
 int main() {
@@ -250,7 +260,8 @@ int main() {
 	BinTree tt;
 	tt = t;
 	t.erase(37);
-	tt.PrintTree(tt.GetRoot(), 0, 40, 0);
+	//tt.PrintTree(tt.GetRoot(), 0, 40, 0);
+	tt.print_Tree(tt.GetRoot());
 	//t->inorderLPK(t->GetRoot());
 	//cout << endl;
 	//t->inorder(t->GetRoot());
