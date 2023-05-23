@@ -3,24 +3,18 @@
 #include <string>
 #include <algorithm> 
 #include <windows.h>
+#include <vector>
 using namespace std;
 class Node {
 	friend class BinTree;
-public:
-	int Data, num;
+private:
+	int Data;
 	Node* right, * left;
 public:
-	Node(int k = 0, int n = 0, Node* r=NULL, Node* l=NULL) {
-		num = n;
+	Node(int k = 0, Node* r=NULL, Node* l=NULL) {
 		Data = k;
 		right = r;
 		left = l;
-	}
-	~Node() {
-		num = 0;
-		Data = 0;
-		delete right;
-		delete left;
 	}
 };
 
@@ -36,28 +30,22 @@ private:
 			delete nod;
 		}
 	}
-	bool printLevel(Node* nod, int level)
-	{
-		if (nod == NULL) {
-			return false;
-		}
-		if (level == 1)
-		{
-			cout << nod->Data << " ";// вернуть true, если хотя бы один узел присутствует на заданном уровне
-			return true;
-		}
-		bool left = printLevel(nod->left, level - 1);
-		bool right = printLevel(nod->right, level - 1);
-
-		return left || right;
-	}
 public:
-	BinTree() { root = new Node(); size = 0; }
-	BinTree(int key) { root = new Node(key); size = 0;}
+	BinTree() { root = NULL; size = 0; }
+	BinTree(int key) { root = new Node(key); size = 1; }
 	BinTree(int key,int size) {
 		root = new Node(key);
 		for (int i = 0; i < size; i++) {
-			insert(rand() % 13);
+			int k = rand() % 13;
+			insert(k);
+		}
+	}
+	BinTree(BinTree& c) {
+		size = c.size;
+		root = new Node(c.root->Data);
+		vector<Node*> aa = c.inorder();
+		for (int i = 0; i < aa.size();i++) {
+			insert(aa[i]->Data);
 		}
 	}
 	~BinTree() {
@@ -139,11 +127,11 @@ public:
 		{
 			// Вместо nod подвешивается его правое поддерево
 			if (parent && parent->left == nod) {
-				parent->left = new Node(nod->right->Data, nod->right->num, nod->right->right, nod->right->left);
+				parent->left = nod->right;
 				size--;
 			}
 			if (parent && parent->right == nod) {
-				parent->right = new Node(nod->right->Data, nod->right->num, nod->right->right, nod->right->left);
+				parent->right = nod->right;
 				size--;
 			}
 			delete nod;
@@ -153,9 +141,9 @@ public:
 		{
 			// Вместо nod подвешивается его левое поддерево
 			if (parent && parent->left == nod)
-				parent->left = new Node(nod->left->Data, nod->left->num, nod->left->right, nod->left->left);
+				parent->left = nod->left;
 			if (parent && parent->right == nod)
-				parent->right = new Node(nod->left->Data, nod->left->num, nod->left->right, nod->left->left);
+				parent->right = nod->left;
 			delete nod;
 			return;
 		}
@@ -225,33 +213,46 @@ public:
 			cout << nod->Data << " -> ";
 		}
 	}
-	void inorder(Node* nod)
-	{
-		// начинаем с уровня 1 — до высоты дерева
-		int level = 1;
-		// работать до тех пор, пока printLevel() не вернет false
-		while (printLevel(nod, level)) {
-			level++;
+	vector<Node*> inorder() {
+		vector<Node*> a1;
+		a1.push_back(root);
+		for (int i = 0; a1.size() < size; i++) {
+			if(a1[i]->left!=NULL){ a1.push_back(a1[i]->left); }
+			if(a1[i]->right!=NULL){ a1.push_back(a1[i]->right); }
 		}
+		return a1;
+	}
+	BinTree& operator = (BinTree &c) {
+		if (this != &c) {
+			delete_tree(root);
+			this->root = new Node(c.root->Data);
+			vector<Node*> a1 = c.inorder();
+			for (int i = 0; i < a1.size(); i++) {
+				insert(a1[i]->Data);
+			}
+		}
+		return *this;
 	}
 };
 
 int main() {
 	srand(time(NULL));
-	BinTree* t = new BinTree(13);
-	t->insert(2);
-	t->insert(1);
-	t->insert(6);
-	t->insert(3);
-	t->insert(11);
-	t->insert(37);
-	t->insert(24);
-	t->insert(22);
-	t->insert(106);
-	t->insert(1005);
-	//t->erase(37);
-	//t->PrintTree(t->GetRoot(), 0, 40, 0);
-	t->inorderKLP(t->GetRoot());
+	BinTree t(13);
+	t.insert(2);
+	t.insert(1);
+	t.insert(6);
+	t.insert(3);
+	t.insert(11);
+	t.insert(37);
+	t.insert(24);
+	t.insert(22);
+	t.insert(106);
+	t.insert(1005);
+	BinTree tt;
+	tt = t;
+	t.erase(37);
+	tt.PrintTree(tt.GetRoot(), 0, 40, 0);
+	//t->inorderLPK(t->GetRoot());
 	//cout << endl;
 	//t->inorder(t->GetRoot());
 	//t->PrintTree(t->GetRoot(), 0, 40, 0);
