@@ -241,6 +241,7 @@ public:
 			delete_tree(root);
 			root = Copy_tree(c.root);
 		}
+		size = c.size;
 		return *this;
 	}
 	void print_Tree(Node* p, int level=0)
