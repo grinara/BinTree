@@ -39,6 +39,14 @@ private:
 			nod->right = new Node(subnod->right->Data);
 			copy_tree(nod->right, subnod->right);
 		}
+
+	}
+	Node* Copy_tree(Node* subnod){
+		if (!subnod) return NULL;
+		Node* nod = new Node(subnod->Data);
+		nod->left = Copy_tree(subnod->left);
+		nod->right = Copy_tree(subnod->right);
+		return nod;
 	}
 public:
 	BinTree() { root = NULL; size = 0; }
@@ -231,8 +239,7 @@ public:
 	BinTree& operator = (BinTree &c) {
 		if (this != &c) {
 			delete_tree(root);
-			this->root = new Node(c.root->Data);
-			copy_tree(root, c.root);
+			root = Copy_tree(c.root);
 		}
 		return *this;
 	}
