@@ -30,6 +30,16 @@ private:
 			delete nod;
 		}
 	}
+	void copy_tree(Node* nod, Node* subnod) {
+		if (subnod->left) {
+			nod->left = new Node(subnod->left->Data);
+			copy_tree(nod->left, subnod->left);
+		}
+		if (subnod->right) {
+			nod->right = new Node(subnod->right->Data);
+			copy_tree(nod->right, subnod->right);
+		}
+	}
 public:
 	BinTree() { root = NULL; size = 0; }
 	BinTree(int key) { root = new Node(key); size = 1; }
@@ -42,10 +52,7 @@ public:
 	BinTree(BinTree& c) {
 		size = c.size;
 		root = new Node(c.root->Data);
-		vector<Node*> aa = c.inorder();
-		for (int i = 0; i < aa.size();i++) {
-			insert(aa[i]->Data);
-		}
+		copy_tree(root, c.root);
 	}
 	~BinTree() {
 		delete_tree(root);
@@ -225,10 +232,7 @@ public:
 		if (this != &c) {
 			delete_tree(root);
 			this->root = new Node(c.root->Data);
-			vector<Node*> a1 = c.inorder();
-			for (int i = 0; i < a1.size(); i++) {
-				insert(a1[i]->Data);
-			}
+			copy_tree(root, c.root);
 		}
 		return *this;
 	}
@@ -258,10 +262,14 @@ int main() {
 	t.insert(106);
 	t.insert(1005);
 	BinTree tt;
+	
 	tt = t;
 	t.erase(37);
-	//tt.PrintTree(tt.GetRoot(), 0, 40, 0);
+	t.print_Tree(t.GetRoot());
+	cout << endl<<endl;
 	tt.print_Tree(tt.GetRoot());
+	//tt.PrintTree(tt.GetRoot(), 0, 40, 0);
+	
 	//t->inorderLPK(t->GetRoot());
 	//cout << endl;
 	//t->inorder(t->GetRoot());
